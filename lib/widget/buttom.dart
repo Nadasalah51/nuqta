@@ -12,7 +12,7 @@ class Buttom extends StatelessWidget {
         backgroundColor: Color(0xffFE464D),
         minimumSize: Size(double.infinity, 50),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(13),
         ),
       ),
       child: Text(
