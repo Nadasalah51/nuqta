@@ -8,9 +8,12 @@ class Textformfeild extends StatelessWidget {
       this.obscure = false,
       this.height = 17,
       this.readonly = false,
+      this.minlines = 1,
       this.controller,
       this.icon,
-      this.ontap});
+      this.ontap,
+      this.items,
+      this.onItemTap});
   final String text;
   final bool obscure;
   final double height;
@@ -18,12 +21,17 @@ class Textformfeild extends StatelessWidget {
   final TextEditingController? controller;
   final Icon? icon;
   final VoidCallback? ontap;
+  final List<String>? items;
+  final Function(String)? onItemTap;
+  final int minlines;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       obscureText: obscure,
       controller: controller,
       readOnly: readonly,
+      minLines: minlines,
+      maxLines: null,
       decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
@@ -36,10 +44,39 @@ class Textformfeild extends StatelessWidget {
               borderSide: BorderSide(width: 1, color: red)),
           labelText: text,
           alignLabelWithHint: true,
-          contentPadding: EdgeInsets.fromLTRB(10, 10, 5, height),
+          labelStyle: TextStyle(fontSize: 16, color: Colors.black),
+          contentPadding: EdgeInsets.fromLTRB(10, 5, 5, height),
           suffixIcon: icon),
       style: TextStyle(fontSize: 16),
-      onTap: ontap,
+      onTap: () {
+        if (items != null && onItemTap != null) {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: Text('Select $text'),
+                content: SingleChildScrollView(
+                  child: Column(
+                    children: items!
+                        .map(
+                          (item) => ListTile(
+                            title: Text(item),
+                            onTap: () {
+                              onItemTap!(item);
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        )
+                        .toList(),
+                  ),
+                ),
+              );
+            },
+          );
+        } else {
+          ontap?.call();
+        }
+      },
     );
   }
 }
