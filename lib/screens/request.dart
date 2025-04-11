@@ -4,6 +4,8 @@ import 'package:nuqta/widget/textformfeild.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import '../widget/blood_group.dart';
+
 class Request extends StatefulWidget {
   const Request({super.key});
 
@@ -21,14 +23,12 @@ class _RequestState extends State<Request> {
 
   bool isLoadingCountries = true;
   bool isLoadingCities = false;
-
-  List<String> bloodGroups = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
   String? selectedBloodGroup;
   Future<void> selectDate(BuildContext context) async {
     DateTime? pickedDate = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(2025),
+      firstDate: DateTime.now(),
       lastDate: DateTime(2101),
     );
     if (pickedDate != null && pickedDate != DateTime.now()) {

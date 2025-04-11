@@ -3,6 +3,7 @@ import 'package:nuqta/screens/firstpage.dart';
 import 'package:nuqta/screens/forgetnumber.dart';
 import 'package:nuqta/screens/homepage.dart';
 import 'package:nuqta/screens/loginscreen.dart';
+import 'package:nuqta/screens/profile_screen.dart';
 import 'package:nuqta/screens/request.dart';
 import 'package:nuqta/screens/signupscreen.dart';
 import 'package:nuqta/screens/verifyscreen.dart';
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
         'signup': (context) => Signupscreen(),
         'verifyscreen': (context) => Verifyscreen(),
       },
-      home: Request(),
+      home: ProfileScreen(),
     );
   }
 }
