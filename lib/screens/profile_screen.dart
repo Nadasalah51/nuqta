@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:nuqta/screens/request.dart';
 import 'package:nuqta/widget/buttom.dart';
 import 'package:nuqta/widget/textformfeild.dart';
 import 'package:country_state_city_picker/country_state_city_picker.dart';
-
 import '../widget/blood_group.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -244,32 +245,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ],
         ),
-      ), // Placeholder
-      Center(
-        child: Column(
-          children: [
-            CircleAvatar(
-              backgroundColor: Color.fromARGB(15, 250, 0, 20),
-              radius: 40,
-              child: Icon(
-                Icons.add_a_photo_outlined,
-                size: 40,
-                color: Color(0xFFF0A5A3),
-              ),
-            ),
-            Text('Upload your Image'),
-            Container(
-              decoration: BoxDecoration(),
-              child: Column(
-                children: [
-                  Icon(Icons.add_a_photo_outlined),
-                  Text('Upload your profile photo')
-                ],
-              ),
-            )
-          ],
-        ),
-      ), // Placeholder
+      ), // Placeholder// Placeholder
     ];
     return Scaffold(
       backgroundColor: Colors.white,
@@ -322,7 +298,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           duration: Duration(milliseconds: 300),
                           curve: Curves.easeInOut,
                         );
-                      } else {}
+                      } else {
+                        Get.to(Request());
+                      }
                     },
                     text: currentPage == pages.length - 1 ? 'Finish' : 'Next'))
           ],

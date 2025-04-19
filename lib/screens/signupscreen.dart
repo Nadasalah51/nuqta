@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:nuqta/constant.dart';
 import 'package:nuqta/widget/buttom.dart';
 import 'package:nuqta/widget/buttomicon.dart';
@@ -14,7 +15,7 @@ class Signupscreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(15.0),
         child: Column(
-          spacing: 15,
+          spacing: 10,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
@@ -30,7 +31,7 @@ class Signupscreen extends StatelessWidget {
             Text('Mobile'),
             Textformfeild(text: 'enter your number'),
             Text('Password'),
-            Textformfeild(text: 'enter your password', obscure: true),
+            Textformfeild(text: 'enter your password'),
             Buttom(
                 ontap: () {
                   Navigator.pushNamed(context, 'verifyscreen');
@@ -90,7 +91,7 @@ class Signupscreen extends StatelessWidget {
                 ),
                 TextButton(
                   onPressed: () {
-                    Navigator.pop;
+                    Get.back();
                   },
                   child: Text(
                     'Login',

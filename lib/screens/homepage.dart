@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:nuqta/constant.dart';
+
+import 'loginscreen.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -67,8 +70,8 @@ class _HomepageState extends State<Homepage> {
                 children: [
                   Image.asset(
                     pages[index]["image"]!,
-                    width: 500,
-                    height: 500,
+                    width: 200,
+                    height: 200,
                   ),
                   SizedBox(
                     height: 20,
@@ -130,7 +133,7 @@ class _HomepageState extends State<Homepage> {
                   if (currentPage < pages.length - 1) {
                     next();
                   } else {
-                    Navigator.pushNamed(context, 'loginscreen');
+                    Get.to(Loginscreen());
                   }
                 });
               },

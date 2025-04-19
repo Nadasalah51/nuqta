@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:nuqta/constant.dart';
+import 'package:nuqta/screens/profile_screen.dart';
+import 'package:nuqta/screens/signupscreen.dart';
 import 'package:nuqta/widget/buttomicon.dart';
 import 'package:nuqta/widget/textformfeild.dart';
 import 'package:nuqta/widget/buttom.dart';
+import 'forgetnumber.dart';
 
 class Loginscreen extends StatelessWidget {
   const Loginscreen({super.key});
@@ -36,12 +40,15 @@ class Loginscreen extends StatelessWidget {
             Text('Mobile'),
             Textformfeild(text: 'enter your number'),
             Text('Password'),
-            Textformfeild(text: 'enter your password', obscure: true),
+            Textformfeild(
+              text: 'enter your password',
+              // obscure: true,
+            ),
             Align(
               alignment: Alignment.centerRight,
               child: TextButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, 'forgetnumber');
+                  Get.to(Forgetnumber());
                 },
                 child: Text(
                   'forget password?',
@@ -51,7 +58,11 @@ class Loginscreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: 30),
-            Buttom(ontap: () {}, text: 'login'),
+            Buttom(
+                ontap: () {
+                  Get.to(ProfileScreen());
+                },
+                text: 'login'),
             SizedBox(height: 30),
             Row(
               children: [
@@ -77,7 +88,6 @@ class Loginscreen extends StatelessWidget {
               ],
             ),
             Row(
-              // crossAxisAlignment: CrossAxisAlignment.spaceEvenly,
               children: [
                 Spacer(flex: 1),
                 Buttomicon(
@@ -106,7 +116,7 @@ class Loginscreen extends StatelessWidget {
                 ),
                 TextButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, 'signup');
+                      Get.to(Signupscreen());
                     },
                     child: Text('Sign up',
                         style: TextStyle(fontSize: 20, color: Colors.red)))

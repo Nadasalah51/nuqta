@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:nuqta/screens/firstpage.dart';
 import 'package:nuqta/screens/forgetnumber.dart';
 import 'package:nuqta/screens/homepage.dart';
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       // title: 'Flutter Demo',
       // theme: ThemeData(
@@ -30,8 +31,10 @@ class MyApp extends StatelessWidget {
         'forgetnumber': (context) => Forgetnumber(),
         'signup': (context) => Signupscreen(),
         'verifyscreen': (context) => Verifyscreen(),
+        'request': (context) => Request(),
+        'profile': (context) => ProfileScreen(),
       },
-      home: ProfileScreen(),
+      home: Firstpage(),
     );
   }
 }
