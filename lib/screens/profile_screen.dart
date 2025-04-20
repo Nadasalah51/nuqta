@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nuqta/screens/request.dart';
+import 'package:nuqta/constant.dart';
+import 'package:nuqta/screens/information/request.dart';
 import 'package:nuqta/widget/buttom.dart';
 import 'package:nuqta/widget/textformfeild.dart';
 import '../widget/blood_group.dart';
@@ -168,7 +169,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Icon(
                 Icons.person_2,
                 size: 40,
-                color: Color(0xFFF0A5A3),
+                color: pink,
               ),
             ),
             Text('Basic Info'),
@@ -242,7 +243,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             Textformfeild(
               text: 'type about yourself',
-              height: 100,
+              height: 60,
               minlines: 2,
               maxlines: 5,
             ),
@@ -251,9 +252,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ), // Placeholder// Placeholder
     ];
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: background,
       appBar: AppBar(
-        centerTitle: true,
+        title: Text(
+          'Profile Setup',
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
         leading: currentPage > 0
             ? IconButton(
                 icon: Icon(Icons.arrow_back_ios_new),
@@ -265,7 +269,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 },
               )
             : null,
-        backgroundColor: Colors.white,
+        backgroundColor: background,
         elevation: 0,
       ),
       body: Padding(
@@ -273,13 +277,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Column(
           spacing: 10,
           children: [
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Profile Setup',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-            ),
             Expanded(
               child: PageView.builder(
                   itemBuilder: (context, index) => pages[index],

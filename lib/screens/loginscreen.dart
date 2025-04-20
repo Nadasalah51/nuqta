@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nuqta/constant.dart';
-import 'package:nuqta/screens/profile_screen.dart';
+import 'package:nuqta/screens/information/information.dart';
 import 'package:nuqta/screens/signupscreen.dart';
 import 'package:nuqta/widget/buttomicon.dart';
 import 'package:nuqta/widget/textformfeild.dart';
@@ -31,114 +31,115 @@ class _LoginscreenState extends State<Loginscreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
-        child: Column(
-          spacing: 11.0,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Welcome to blood care',
-              style: TextStyle(fontSize: 34, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 30),
-            Text(
-              'Enter your email address and password to login',
-              style: TextStyle(fontSize: 20),
-            ),
-            Text('Mobile'),
-            Textformfeild(text: 'enter your number'),
-            Text('Password'),
-            Textformfeild(
-              text: 'enter your password',
-              icon: Icon(
-                isPasswordVisible ? Icons.visibility : Icons.visibility_off,
-                color: Colors.grey,
+        child: SingleChildScrollView(
+          child: Column(
+            spacing: 2.0,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Welcome to blood care',
+                style: TextStyle(fontSize: 34, fontWeight: FontWeight.bold),
               ),
-              ontap: () {
-                setState(() {
-                  isPasswordVisible = !isPasswordVisible;
-                });
-              },
-              obscure: !isPasswordVisible,
-            ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: TextButton(
-                onPressed: () {
-                  Get.to(Forgetnumber());
-                },
-                child: Text(
-                  'forget password?',
-                  style: TextStyle(fontSize: 20, color: Colors.black),
-                  textAlign: TextAlign.end,
+              SizedBox(height: 30),
+              Text(
+                'Enter your email address and password to login',
+                style: TextStyle(fontSize: 20),
+              ),
+              Text('Mobile'),
+              Textformfeild(text: 'enter your number'),
+              Text('Password'),
+              Textformfeild(
+                text: 'enter your password',
+                icon: Icon(
+                  isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                  color: Colors.grey,
                 ),
-              ),
-            ),
-            SizedBox(height: 30),
-            Buttom(
                 ontap: () {
-                  Get.to(ProfileScreen());
+                  setState(() {
+                    isPasswordVisible = !isPasswordVisible;
+                  });
                 },
-                text: 'login'),
-            SizedBox(height: 30),
-            Row(
-              children: [
-                Expanded(
-                  child: Divider(
-                    color: Colors.grey,
-                    thickness: 1,
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8),
+                obscure: !isPasswordVisible,
+              ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: TextButton(
+                  onPressed: () {
+                    Get.to(Forgetnumber());
+                  },
                   child: Text(
-                    "Or login with",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    'forget password?',
+                    style: TextStyle(fontSize: 20, color: Colors.black),
+                    textAlign: TextAlign.end,
                   ),
                 ),
-                Expanded(
-                  child: Divider(
-                    color: Colors.grey,
-                    thickness: 1,
+              ),
+              SizedBox(height: 30),
+              Buttom(
+                  ontap: () {
+                    Get.to(More());
+                  },
+                  text: 'login'),
+              SizedBox(height: 30),
+              Row(
+                children: [
+                  Expanded(
+                    child: Divider(
+                      color: Colors.grey,
+                      thickness: 1,
+                    ),
                   ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Spacer(flex: 1),
-                Buttomicon(
-                  ontap: () {},
-                  text: 'facebook',
-                  icon: Icons.facebook,
-                  color: Colors.blue,
-                ),
-                Spacer(flex: 1),
-                Buttomicon(
-                  ontap: () {},
-                  text: 'google',
-                  icon: Icons.g_mobiledata,
-                  color: red,
-                ),
-                Spacer(flex: 1),
-              ],
-            ),
-            SizedBox(height: 30),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Don\'t have an account?',
-                  style: TextStyle(fontSize: 20, color: Colors.black),
-                ),
-                TextButton(
-                    onPressed: () {
-                      Get.to(Signupscreen());
-                    },
-                    child: Text('Sign up',
-                        style: TextStyle(fontSize: 20, color: Colors.red)))
-              ],
-            )
-          ],
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8),
+                    child: Text(
+                      "Or login with",
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Expanded(
+                    child: Divider(
+                      color: Colors.grey,
+                      thickness: 1,
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                spacing: 25,
+                children: [
+                  Buttomicon(
+                    ontap: () {},
+                    text: 'facebook',
+                    icon: Icons.facebook,
+                    color: Colors.blue,
+                  ),
+                  Buttomicon(
+                    ontap: () {},
+                    text: 'google',
+                    icon: Icons.g_mobiledata,
+                    color: red,
+                  ),
+                ],
+              ),
+              SizedBox(height: 30),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Don\'t have an account?',
+                    style: TextStyle(fontSize: 20, color: Colors.black),
+                  ),
+                  TextButton(
+                      onPressed: () {
+                        Get.to(Signupscreen());
+                      },
+                      child: Text('Sign up',
+                          style: TextStyle(fontSize: 20, color: Colors.red)))
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );

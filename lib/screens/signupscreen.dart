@@ -23,7 +23,7 @@ class _SignupscreenState extends State<Signupscreen> {
         padding: const EdgeInsets.all(15.0),
         child: SingleChildScrollView(
           child: Column(
-            spacing: 10,
+            spacing: 2,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
@@ -68,6 +68,7 @@ class _SignupscreenState extends State<Signupscreen> {
                 },
                 obscure: !isConfirmPasswordVisible,
               ),
+              SizedBox(height: 30),
               Buttom(
                   ontap: () {
                     Navigator.pushNamed(context, 'verifyscreen');

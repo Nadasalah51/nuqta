@@ -16,7 +16,7 @@ class Buttomicon extends StatelessWidget {
     return ElevatedButton.icon(
       onPressed: ontap,
       style: ElevatedButton.styleFrom(
-        minimumSize: Size(250, 50),
+        minimumSize: Size(150, 50),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),

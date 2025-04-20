@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:nuqta/constant.dart';
 import 'package:nuqta/widget/buttom.dart';
 import 'package:nuqta/widget/textformfeild.dart';
-import '../widget/blood_group.dart';
-import '../widget/location.dart';
+import '../../widget/blood_group.dart';
+import '../../widget/location.dart';
 
 class Request extends StatefulWidget {
   const Request({super.key});
@@ -36,13 +37,12 @@ class _RequestState extends State<Request> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: background,
       appBar: AppBar(
-        title: Text('Create Request'),
+        title: Text('Create Blood Request'),
         centerTitle: true,
-        leading: Icon(Icons.arrow_back_ios_new),
-        backgroundColor: Colors.white,
-        surfaceTintColor: Colors.white,
+        backgroundColor: background,
+        surfaceTintColor: background,
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -165,7 +165,7 @@ class _RequestState extends State<Request> {
                     ? 'Select Governorate'
                     : 'your state is $stateValue',
                 readonly: true,
-                icon: Icon(Icons.arrow_drop_down),
+                icon: Icon(Icons.location_city),
                 items: governorates,
                 onItemTap: (value) {
                   setState(() {
@@ -199,7 +199,8 @@ class _RequestState extends State<Request> {
                 child: Text(
                     'Your location is ${cityValue != null ? '$stateValue , $cityValue' : ''}'),
               ),
-              Buttom(ontap: () {}, text: 'Create request')
+              Buttom(ontap: () {}, text: 'Create request'),
+              SizedBox(height: 10),
             ],
           ),
         ),

@@ -53,6 +53,7 @@ class Textformfeild extends StatelessWidget {
           contentPadding: EdgeInsets.fromLTRB(10, 5, 5, height),
           suffixIcon: icon),
       style: TextStyle(fontSize: 16),
+      textAlignVertical: TextAlignVertical.top,
       onTap: () {
         if (items != null && onItemTap != null) {
           showDialog(
