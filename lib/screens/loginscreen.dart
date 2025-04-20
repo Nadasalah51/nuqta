@@ -8,9 +8,16 @@ import 'package:nuqta/widget/textformfeild.dart';
 import 'package:nuqta/widget/buttom.dart';
 import 'forgetnumber.dart';
 
-class Loginscreen extends StatelessWidget {
+class Loginscreen extends StatefulWidget {
   const Loginscreen({super.key});
 
+  @override
+  State<Loginscreen> createState() => _LoginscreenState();
+}
+
+class _LoginscreenState extends State<Loginscreen> {
+  bool isPasswordVisible = true;
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +49,16 @@ class Loginscreen extends StatelessWidget {
             Text('Password'),
             Textformfeild(
               text: 'enter your password',
-              // obscure: true,
+              icon: Icon(
+                isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                color: Colors.grey,
+              ),
+              ontap: () {
+                setState(() {
+                  isPasswordVisible = !isPasswordVisible;
+                });
+              },
+              obscure: !isPasswordVisible,
             ),
             Align(
               alignment: Alignment.centerRight,

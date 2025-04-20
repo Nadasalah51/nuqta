@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:nuqta/screens/request.dart';
 import 'package:nuqta/widget/buttom.dart';
 import 'package:nuqta/widget/textformfeild.dart';
-import 'package:country_state_city_picker/country_state_city_picker.dart';
 import '../widget/blood_group.dart';
+import '../widget/location.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -19,7 +19,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   TextEditingController genderController = TextEditingController();
   TextEditingController choiceController = TextEditingController();
   int currentPage = 0;
-  String? countryValue;
   String? stateValue;
   String? cityValue;
   String? selectedBloodGroup;
@@ -28,6 +27,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   int? age;
   final List<String> genders = ['Male', 'Female'];
   final List<String> choices = ['Yes', 'No'];
+
   Future<void> selectDate(BuildContext context) async {
     DateTime? pickedDate = await showDatePicker(
       context: context,
@@ -55,6 +55,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return age;
   }
 
+  List<String> get governorates => egyptGovernorates.keys.toList();
+  List<String> get cities =>
+      stateValue != null ? egyptGovernorates[stateValue!]! : [];
   @override
   Widget build(BuildContext context) {
     final List<Widget> pages = [
@@ -110,36 +113,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                'Your Country',
+                'Your State',
                 style: TextStyle(fontSize: 15),
               ),
             ),
             Textformfeild(
-                text: countryValue == null || countryValue!.isEmpty
-                    ? 'Select your country'
-                    : 'Selected country: $countryValue',
-                readonly: true,
-                icon: Icon(Icons.arrow_drop_down),
-                ontap: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text("Select Country"),
-                        content: SelectState(
-                          onCountryChanged: (value) {
-                            setState(() {
-                              countryValue = value;
-                            });
-                            Navigator.of(context).pop();
-                          },
-                          onStateChanged: (String value) {},
-                          onCityChanged: (String value) {},
-                        ),
-                      );
-                    },
-                  );
-                }),
+              text: stateValue == null
+                  ? 'Select Governorate'
+                  : 'your state is $stateValue',
+              readonly: true,
+              icon: Icon(Icons.arrow_drop_down),
+              items: governorates,
+              onItemTap: (value) {
+                setState(() {
+                  stateValue = value;
+                  cityValue = null;
+                });
+              },
+            ),
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
@@ -148,11 +139,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
             Textformfeild(
-              text: cityValue == null || cityValue!.isEmpty
-                  ? 'Select your city'
-                  : 'Selected country: $cityValue',
+              text:
+                  cityValue == null ? 'Select City' : 'your city is $cityValue',
               readonly: true,
               icon: Icon(Icons.arrow_drop_down),
+              items: cities,
+              onItemTap: (value) {
+                setState(() {
+                  cityValue = value;
+                });
+              },
+            ),
+            Align(
+              alignment: Alignment.centerRight,
+              child: Text(
+                  'Your location is ${cityValue != null ? '$stateValue , $cityValue' : ''}'),
             ),
           ],
         ),
@@ -242,6 +243,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Textformfeild(
               text: 'type about yourself',
               height: 100,
+              minlines: 2,
+              maxlines: 5,
             ),
           ],
         ),

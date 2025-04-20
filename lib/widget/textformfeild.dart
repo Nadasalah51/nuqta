@@ -14,7 +14,8 @@ class Textformfeild extends StatelessWidget {
       this.icon,
       this.ontap,
       this.items,
-      this.onItemTap});
+      this.onItemTap,
+      this.validator});
   final String text;
   final bool obscure;
   final double height;
@@ -26,14 +27,16 @@ class Textformfeild extends StatelessWidget {
   final Function(String)? onItemTap;
   final int minlines;
   final int maxlines;
+  final String? Function(String?)? validator;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       obscureText: obscure,
       controller: controller,
       readOnly: readonly,
-      minLines: obscure ? 1 : maxlines,
-      maxLines: null,
+      validator: validator,
+      minLines: obscure ? 1 : minlines,
+      maxLines: obscure ? 1 : maxlines,
       decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),

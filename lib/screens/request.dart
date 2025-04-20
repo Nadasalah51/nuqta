@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nuqta/widget/buttom.dart';
 import 'package:nuqta/widget/textformfeild.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-
 import '../widget/blood_group.dart';
+import '../widget/location.dart';
 
 class Request extends StatefulWidget {
   const Request({super.key});
@@ -15,14 +13,8 @@ class Request extends StatefulWidget {
 
 class _RequestState extends State<Request> {
   TextEditingController dateController = TextEditingController();
-  List<String> countries = [];
-  String? selectedCountry;
-
-  List<String> cities = [];
-  String? selectedCity;
-
-  bool isLoadingCountries = true;
-  bool isLoadingCities = false;
+  String? stateValue;
+  String? cityValue;
   String? selectedBloodGroup;
   Future<void> selectDate(BuildContext context) async {
     DateTime? pickedDate = await showDatePicker(
@@ -38,83 +30,9 @@ class _RequestState extends State<Request> {
     }
   }
 
-  Future<List<String>> getCountries() async {
-    final response = await http.get(
-        Uri.parse('https://countriesnow.space/api/v0.1/countries/positions'));
-
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      List countries = data['data'];
-      return countries
-          .map<String>((country) => country['name'].toString())
-          .toList();
-    } else {
-      throw Exception('Failed to load countries');
-    }
-  }
-
-  Future<List<String>> getCities(String country) async {
-    final response = await http.post(
-      Uri.parse('https://countriesnow.space/api/v0.1/countries/cities'),
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode({"country": country}),
-    );
-
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      return List<String>.from(data['data']);
-    } else {
-      throw Exception('Failed to load cities');
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    fetchCountries();
-  }
-
-  void fetchCountries() async {
-    try {
-      List<String> countryList = await getCountries();
-      setState(() {
-        countries = countryList;
-        isLoadingCountries = false;
-      });
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('error...try again'),
-          duration: Duration(seconds: 3),
-        ),
-      );
-    }
-  }
-
-  void fetchCities(String country) async {
-    try {
-      setState(() {
-        isLoadingCities = true;
-        cities = [];
-      });
-      List<String> cityList = await getCities(country);
-      setState(() {
-        cities = cityList;
-        isLoadingCities = false;
-      });
-    } catch (e) {
-      setState(() {
-        isLoadingCities = false;
-      });
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Error fetching cities. Please try again.'),
-          duration: Duration(seconds: 3),
-        ),
-      );
-    }
-  }
-
+  List<String> get governorates => egyptGovernorates.keys.toList();
+  List<String> get cities =>
+      stateValue != null ? egyptGovernorates[stateValue!]! : [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -211,6 +129,7 @@ class _RequestState extends State<Request> {
                 text: 'type reason of blood request',
                 height: 70,
                 minlines: 2,
+                maxlines: 5,
               ),
               Text(
                 'Personal Info',
@@ -236,89 +155,50 @@ class _RequestState extends State<Request> {
               Textformfeild(text: 'type number'),
               Align(
                 alignment: Alignment.centerLeft,
-                child: Text('Country'),
+                child: Text(
+                  'Your State',
+                  style: TextStyle(fontSize: 15),
+                ),
               ),
-              isLoadingCountries
-                  ? CircularProgressIndicator()
-                  : Textformfeild(
-                      text: 'Select Country',
-                      readonly: true,
-                      controller: TextEditingController(text: selectedCountry),
-                      icon: Icon(
-                        Icons.arrow_drop_down_sharp,
-                        size: 30,
-                      ),
-                      ontap: () {
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              title: Text('Select Country'),
-                              content: SingleChildScrollView(
-                                child: Column(
-                                  children: countries
-                                      .map(
-                                        (country) => ListTile(
-                                          title: Text(country),
-                                          onTap: () {
-                                            setState(() {
-                                              selectedCountry = country;
-                                            });
-                                            Navigator.of(context).pop();
-                                            fetchCities(country);
-                                          },
-                                        ),
-                                      )
-                                      .toList(),
-                                ),
-                              ),
-                            );
-                          },
-                        );
-                      },
-                    ),
+              Textformfeild(
+                text: stateValue == null
+                    ? 'Select Governorate'
+                    : 'your state is $stateValue',
+                readonly: true,
+                icon: Icon(Icons.arrow_drop_down),
+                items: governorates,
+                onItemTap: (value) {
+                  setState(() {
+                    stateValue = value;
+                    cityValue = null;
+                  });
+                },
+              ),
               Align(
                 alignment: Alignment.centerLeft,
-                child: Text('City'),
+                child: Text(
+                  'Your City',
+                  style: TextStyle(fontSize: 15),
+                ),
               ),
-              isLoadingCities
-                  ? CircularProgressIndicator()
-                  : Textformfeild(
-                      text: 'Select City',
-                      readonly: true,
-                      controller: TextEditingController(text: selectedCity),
-                      icon: Icon(
-                        Icons.arrow_drop_down_sharp,
-                        size: 30,
-                      ),
-                      ontap: () {
-                        if (selectedCountry != null) {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                title: Text('Select City'),
-                                content: SingleChildScrollView(
-                                  child: Column(
-                                    children: cities
-                                        .map((city) => ListTile(
-                                              title: Text(city),
-                                              onTap: () {
-                                                setState(() {
-                                                  selectedCity = city;
-                                                });
-                                                Navigator.of(context).pop();
-                                              },
-                                            ))
-                                        .toList(),
-                                  ),
-                                ),
-                              );
-                            },
-                          );
-                        }
-                      },
-                    ),
+              Textformfeild(
+                text: cityValue == null
+                    ? 'Select City'
+                    : 'your city is $cityValue',
+                readonly: true,
+                icon: Icon(Icons.arrow_drop_down),
+                items: cities,
+                onItemTap: (value) {
+                  setState(() {
+                    cityValue = value;
+                  });
+                },
+              ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: Text(
+                    'Your location is ${cityValue != null ? '$stateValue , $cityValue' : ''}'),
+              ),
               Buttom(ontap: () {}, text: 'Create request')
             ],
           ),
